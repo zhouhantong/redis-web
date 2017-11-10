@@ -1,0 +1,121 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-4.0.xsd
+		http://www.springframework.org/schema/aop
+		http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
+		http://www.springframework.org/schema/tx
+		http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+	<context:property-placeholder location="classpath:config/*.properties"/>
+	<!--整合mybatis-->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+		  p:driverClassName="${jdbc.driverClassName}"
+		  p:url="${jdbc.url}"
+		  p:username="${jdbc.username}"
+		  p:password="${jdbc.password}"
+	/>
+	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean"
+		  p:dataSource-ref="dataSource"
+		  p:mapperLocations="classpath*:mapper/*/*Mapper.xml"
+	/>
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer"
+		  p:sqlSessionFactoryBeanName="sqlSessionFactory"
+		  p:basePackage="com.zy.zht.dao"
+	/>
+	<!--mybatis end-->
+	<!--注解扫描包-->
+	<context:component-scan base-package="com.zy.zht.bean,com.zy.zht.services,com.zy.zht.redis,com.zy.zht.utils,com.zy.zht.dao"/>
+	<!--整合redis-->
+
+	<bean id="poolConfig" class="redis.clients.jedis.JedisPoolConfig"
+			p:maxIdle="${redis.pool.maxIdle}"
+		  	p:maxTotal="${redis.pool.maxActive}"
+		  	p:maxWaitMillis="${redis.pool.maxWait}"
+	/>
+	<bean id="conFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory"
+			p:poolConfig-ref="poolConfig"
+		  	p:hostName="${redis.ip}"
+		  	p:port="${redis.port}"
+	/>
+	<bean id="redisTemplate" class="org.springframework.data.redis.core.RedisTemplate">
+		<property name="connectionFactory" ref="conFactory"/>
+		<property name="keySerializer">
+			<bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+		</property>
+		<property name="valueSerializer">
+			<bean class="org.springframework.data.redis.serializer.StringRedisSerializer"/>
+		</property>
+	</bean>
+
+	<!--eache配置-->
+
+	<!--整合quartz
+		任务对象 任务描述(MethodInvokingJobDetailFactoryBean)
+		触发器(CroTriggerFactoryBean)
+		总调度类(SchudlerFactoryBean)
+		-->
+	<bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean"
+			p:targetObject-ref="rTask"
+		  	p:targetMethod="redisTask"
+	/>
+	<bean id="trigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean"
+			p:jobDetail-ref="jobDetail"
+		  	p:cronExpression="0 0 0/1 * * ? *"
+	/>
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+		<property name="triggers">
+			<list>
+				<ref bean="trigger"/>
+			</list>
+		</property>
+	</bean>
+	<!--配置事务管理器-->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager"
+			p:dataSource="dataSource"
+		  	p:dataSource-ref="dataSource"
+	/>
+	<tx:advice id="txAdvice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<!--写操作-->
+			<tx:method name="insert*" propagation="REQUIRED" isolation="DEFAULT"/>
+			<tx:method name="update*" propagation="REQUIRED" isolation="DEFAULT"/>
+			<tx:method name="delete*" propagation="REQUIRED" isolation="DEFAULT"/>
+			<!--读操作-->
+			<tx:method name="select*" propagation="REQUIRED" isolation="DEFAULT" read-only="true"/>
+			<tx:method name="get*" propagation="REQUIRED" isolation="DEFAULT" read-only="true"/>
+			<tx:method name="find*" propagation="REQUIRED" isolation="DEFAULT" read-only="true"/>
+			<tx:method name="*" propagation="REQUIRED" isolation="DEFAULT"/>
+ 		</tx:attributes>
+	</tx:advice>
+	<aop:config>
+		<!--把事务控制在service层-->
+		<aop:pointcut id="pc" expression="execution(public * com.zy.zht.services.*.*(..))"/>
+		<aop:advisor advice-ref="txAdvice" pointcut-ref="pc"/>
+	</aop:config>
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zy.zht.dao.ExcelMapper" >
+  <resultMap id="BaseResultMap" type="com.zy.zht.bean.Excel" >
+    <id column="PKID" property="pkid" jdbcType="INTEGER" />
+    <result column="EVECTION_SITE" property="evectionSite" jdbcType="VARCHAR" />
+    <result column="PROJECT_TYPE" property="projectType" jdbcType="INTEGER" />
+    <result column="EVECTION_TIME" property="evectionTime" jdbcType="TIMESTAMP" />
+    <result column="END_TIME" property="endTime" jdbcType="TIMESTAMP" />
+    <result column="EVECTION_DATE" property="evectionDate" jdbcType="INTEGER" />
+    <result column="EVECTION_PORSON" property="evectionPorson" jdbcType="VARCHAR" />
+    <result column="END_WORK" property="endWork" jdbcType="VARCHAR" />
+    <result column="SUMMARY_ISSUES" property="summaryIssues" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    PKID, EVECTION_SITE, PROJECT_TYPE, EVECTION_TIME, END_TIME, EVECTION_DATE, EVECTION_PORSON, 
+    END_WORK, SUMMARY_ISSUES
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from execl
+    where PKID = #{pkid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from execl
+    where PKID = #{pkid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.zy.zht.bean.Excel" >
+    insert into execl (PKID, EVECTION_SITE, PROJECT_TYPE, 
+      EVECTION_TIME, END_TIME, EVECTION_DATE, 
+      EVECTION_PORSON, END_WORK, SUMMARY_ISSUES
+      )
+    values (#{pkid,jdbcType=INTEGER}, #{evectionSite,jdbcType=VARCHAR}, #{projectType,jdbcType=INTEGER}, 
+      #{evectionTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{evectionDate,jdbcType=INTEGER}, 
+      #{evectionPorson,jdbcType=VARCHAR}, #{endWork,jdbcType=VARCHAR}, #{summaryIssues,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zy.zht.bean.Excel" >
+    insert into execl
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="pkid != null" >
+        PKID,
+      </if>
+      <if test="evectionSite != null" >
+        EVECTION_SITE,
+      </if>
+      <if test="projectType != null" >
+        PROJECT_TYPE,
+      </if>
+      <if test="evectionTime != null" >
+        EVECTION_TIME,
+      </if>
+      <if test="endTime != null" >
+        END_TIME,
+      </if>
+      <if test="evectionDate != null" >
+        EVECTION_DATE,
+      </if>
+      <if test="evectionPorson != null" >
+        EVECTION_PORSON,
+      </if>
+      <if test="endWork != null" >
+        END_WORK,
+      </if>
+      <if test="summaryIssues != null" >
+        SUMMARY_ISSUES,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="pkid != null" >
+        #{pkid,jdbcType=INTEGER},
+      </if>
+      <if test="evectionSite != null" >
+        #{evectionSite,jdbcType=VARCHAR},
+      </if>
+      <if test="projectType != null" >
+        #{projectType,jdbcType=INTEGER},
+      </if>
+      <if test="evectionTime != null" >
+        #{evectionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="evectionDate != null" >
+        #{evectionDate,jdbcType=INTEGER},
+      </if>
+      <if test="evectionPorson != null" >
+        #{evectionPorson,jdbcType=VARCHAR},
+      </if>
+      <if test="endWork != null" >
+        #{endWork,jdbcType=VARCHAR},
+      </if>
+      <if test="summaryIssues != null" >
+        #{summaryIssues,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zy.zht.bean.Excel" >
+    update execl
+    <set >
+      <if test="evectionSite != null" >
+        EVECTION_SITE = #{evectionSite,jdbcType=VARCHAR},
+      </if>
+      <if test="projectType != null" >
+        PROJECT_TYPE = #{projectType,jdbcType=INTEGER},
+      </if>
+      <if test="evectionTime != null" >
+        EVECTION_TIME = #{evectionTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null" >
+        END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="evectionDate != null" >
+        EVECTION_DATE = #{evectionDate,jdbcType=INTEGER},
+      </if>
+      <if test="evectionPorson != null" >
+        EVECTION_PORSON = #{evectionPorson,jdbcType=VARCHAR},
+      </if>
+      <if test="endWork != null" >
+        END_WORK = #{endWork,jdbcType=VARCHAR},
+      </if>
+      <if test="summaryIssues != null" >
+        SUMMARY_ISSUES = #{summaryIssues,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where PKID = #{pkid,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zy.zht.bean.Excel" >
+    update execl
+    set EVECTION_SITE = #{evectionSite,jdbcType=VARCHAR},
+      PROJECT_TYPE = #{projectType,jdbcType=INTEGER},
+      EVECTION_TIME = #{evectionTime,jdbcType=TIMESTAMP},
+      END_TIME = #{endTime,jdbcType=TIMESTAMP},
+      EVECTION_DATE = #{evectionDate,jdbcType=INTEGER},
+      EVECTION_PORSON = #{evectionPorson,jdbcType=VARCHAR},
+      END_WORK = #{endWork,jdbcType=VARCHAR},
+      SUMMARY_ISSUES = #{summaryIssues,jdbcType=VARCHAR}
+    where PKID = #{pkid,jdbcType=INTEGER}
+  </update>
+  <!--批量添加-->
+  <insert id="insertAll" parameterType="com.zy.zht.bean.Excel" >
+    insert into execl (PKID, EVECTION_SITE, PROJECT_TYPE,
+    EVECTION_TIME, END_TIME, EVECTION_DATE,
+    EVECTION_PORSON, END_WORK, SUMMARY_ISSUES
+    )
+    values 
+    <foreach collection="list" item="item" index="index" separator=",">
+    (#{pkid,jdbcType=INTEGER}, #{evectionSite,jdbcType=VARCHAR}, #{projectType,jdbcType=INTEGER},
+    #{evectionTime,jdbcType=TIMESTAMP}, #{endTime,jdbcType=TIMESTAMP}, #{evectionDate,jdbcType=INTEGER},
+    #{evectionPorson,jdbcType=VARCHAR}, #{endWork,jdbcType=VARCHAR}, #{summaryIssues,jdbcType=VARCHAR}
+    )
+    </foreach>
+  </insert>
+</mapper>

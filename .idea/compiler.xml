@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="redisdao" />
+        <module name="redismodel" />
+        <module name="redisservers" />
+        <module name="redisweb" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="redisdao" target="1.5" />
+      <module name="redismodel" target="1.5" />
+      <module name="redisroot" target="1.5" />
+      <module name="redisservers" target="1.5" />
+      <module name="redisweb" target="1.5" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

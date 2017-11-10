@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/redisdao/redisdao.iml" filepath="$PROJECT_DIR$/redisdao/redisdao.iml" />
+      <module fileurl="file://$PROJECT_DIR$/redismodel/redismodel.iml" filepath="$PROJECT_DIR$/redismodel/redismodel.iml" />
+      <module fileurl="file://$PROJECT_DIR$/redisroot.iml" filepath="$PROJECT_DIR$/redisroot.iml" />
+      <module fileurl="file://$PROJECT_DIR$/redisservers/redisservers.iml" filepath="$PROJECT_DIR$/redisservers/redisservers.iml" />
+      <module fileurl="file://$PROJECT_DIR$/redisweb/redisweb.iml" filepath="$PROJECT_DIR$/redisweb/redisweb.iml" />
+    </modules>
+  </component>
+</project>

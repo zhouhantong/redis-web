@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="Encoding" defaultCharsetForPropertiesFiles="UTF-8">
+    <file url="file://$PROJECT_DIR$" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/redisdao" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/redismodel" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/redisservers" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/redisweb" charset="UTF-8" />
+    <file url="PROJECT" charset="UTF-8" />
+  </component>
+</project>
